@@ -2,6 +2,7 @@ package com.example.postapp.repository
 
 import com.example.postapp.API.ApiClient
 import com.example.postapp.API.ApiInterface
+import com.example.postapp.Database.PostAppDatabase
 import com.example.postapp.Model.post
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -16,5 +17,12 @@ class PostRepository {
         return@withContext response
 
     }
+    suspend fun savePosts(List<post>) = withContext(Dispatchers.IO){
+        val database = PostAppDatabase.getDbInstance(PostApp.appContext)
+        postsList.forEach{
+            database.PostDao().insertPost(post)
+        }
+    }
+
 
 }
